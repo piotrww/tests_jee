@@ -5,19 +5,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import page.*;
+import page.BookingHomePage;
+import page.BookingHomePagesSectionTwo;
+import page.GoToGatePage;
+import page.PageObjectManager;
 
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class LoginTest {
+public class Login2test {
+
     private WebDriver driver; //deklaracja zmiennej
 
+    private PageObjectManager pageObjectManager;
 
-    // private BookingHomePage bookingHomePage = new BookingHomePage(driver);
 
 
     @Before // one
@@ -30,7 +34,14 @@ public class LoginTest {
         driver.manage().window().maximize();
         driver.get("https://booking.com/");
         // driver.get("https://demoqa.com/browser-windows");
+
+        pageObjectManager = new PageObjectManager(driver);
     }
+
+
+
+
+
 
     public int monthFromSystem = Calendar.getInstance().get(Calendar.MONTH);
 
@@ -170,11 +181,9 @@ public class LoginTest {
 
     @Test
     public void gotoCarHireWithChaining() {
-
-
-
-        BookingHomePage bookingHomePage = new BookingHomePage(driver);
-        String textOfCarHirePageHeader = bookingHomePage.goToCarHirePage().getTextOfCarHireButton();
+        String textOfCarHirePageHeader = pageObjectManager.getBookingHomePage().goToCarHirePage().getTextOfCarHireButton();
+        
+       // String textOfCarHirePageHeader = bookingHomePage.goToCarHirePage().getTextOfCarHireButton();
         System.out.println(textOfCarHirePageHeader);
         Assert.assertEquals("Wynajem samochodu na każdy rodzaj podróży", textOfCarHirePageHeader);
 
@@ -198,20 +207,20 @@ public class LoginTest {
 
 //////////////////////////
 
-        // String myEmail = "piotr.warsza@kantar.com";
+// String myEmail = "piotr.warsza@kantar.com";
 
-    //    HomePage homePage = new HomePage(driver); //Nowy obiekt typu homepage, konstruktor ma jeden argument: driver. Typ (klasa) HomePage.
-     //   homePage.clickLoginButton();
+//    HomePage homePage = new HomePage(driver); //Nowy obiekt typu homepage, konstruktor ma jeden argument: driver. Typ (klasa) HomePage.
+//   homePage.clickLoginButton();
 
-     //   System.out.println(homePage);
+//   System.out.println(homePage);
 
-        //     LoginInputEmailPage loginInputEmailPage = new LoginInputEmailPage(driver);
-     //   loginInputEmailPage.fillInputEmail(myEmail);
+//     LoginInputEmailPage loginInputEmailPage = new LoginInputEmailPage(driver);
+//   loginInputEmailPage.fillInputEmail(myEmail);
 
-     //   loginInputEmailPage.clickGoButton();
+//   loginInputEmailPage.clickGoButton();
 
 
-        // Można też prościej, szybciej: new HomePage(driver).clickLoginButton();
+// Można też prościej, szybciej: new HomePage(driver).clickLoginButton();
 
 
 
@@ -223,6 +232,12 @@ public class LoginTest {
 //       Car myCar = new Car();
 //      myCar.printOutsideConstructor();
 //   }
+
+
+
+
+
+
 
 
 
