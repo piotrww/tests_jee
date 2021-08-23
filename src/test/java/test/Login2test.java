@@ -39,60 +39,61 @@ public class Login2test {
     }
 
 
-
-
-
-
-    public int monthFromSystem = Calendar.getInstance().get(Calendar.MONTH);
-
-
     @Test
 
     public void checkTextOfTheBar() {
-
-        BookingHomePage bookingHomePage = new BookingHomePage(driver); //CTRL ALT N (inline zmiennej);
-        System.out.println("Wypisanie w metodzie (teście LoginTest): " + bookingHomePage.getBarText());
-        System.out.println("Zmienna panelText: " + bookingHomePage.getBarText());
-
-        assertEquals(bookingHomePage.getBarText(), "Koronawirus (COVID-19) – wsparcie"); //obiekt, stworzony w 39 wierszu
+        assertEquals(pageObjectManager.getBookingHomePage().getBarText(), "Koronawirus (COVID-19) – wsparcie"); //obiekt, stworzony w 39 wierszu
     }
 
     @Test
     public void checkColorOfBackground() {
-        BookingHomePage bookingHomePage = new BookingHomePage(driver);
-        System.out.println("Kolor div pobrany w metodzie (teście LoginTest): " + bookingHomePage.getColorCode());
-
-
-        assertEquals(bookingHomePage.getColorCode(), "rgb(51, 51, 51)");
-
-        String colorBelt = bookingHomePage.getColorCode();
-        System.out.println(colorBelt);
-
+        String colorCode = pageObjectManager.getBookingHomePage().getColorCode();
+        System.out.println("Kolor div pobrany w metodzie (teście LoginTest): " + colorCode);
+        assertEquals(colorCode, "rgb(51, 51, 51)");
     }
 
     @Test
     public void getTextOfExtraAlert() {
-        BookingHomePage bookingHomePage = new BookingHomePage(driver);
-        bookingHomePage.clickAndGetExtraAlertText();
+
+//        BookingHomePage bookingHomePage = new BookingHomePage(driver);
+//        bookingHomePage.getNumberOfCharactersInAlert();
         //  System.out.println("Extra text: " + " " + bookingHomePage.clickAndGetExtraAlertText());
 
+//        if (numberOfCharacters > 20 && numberOfCharacters < 320) {
+//            System.out.println("Number of characters is correct");
+//        }
+
+        System.out.println(pageObjectManager.getBookingHomePage().getNumberOfCharactersInAlert() > 20 ? "Number of characters is correct" : "Incorrect");
     }
 
     @Test
     public void checkIfMoreIsLink() {
-        BookingHomePage bookingHomePage = new BookingHomePage(driver);
-        bookingHomePage.getMoreText();
-        //  System.out.println("Extra text: " + " " + bookingHomePage.clickAndGetExtraAlertText());
 
-        assertTrue(bookingHomePage.getMoreText().contains("booking.com/"));
+        assertTrue(pageObjectManager.getBookingHomePage().getMoreText().contains("booking.com/"));
+
+
+
+//        BookingHomePage bookingHomePage = new BookingHomePage(driver);
+//        bookingHomePage.getMoreText();
+//        //  System.out.println("Extra text: " + " " + bookingHomePage.clickAndGetExtraAlertText());
+//
+//        assertTrue(bookingHomePage.getMoreText().contains("booking.com/"));
 
 
     }
 
     @Test
     public void checkSizeofAlertDiv() {
-        BookingHomePage bookingHomePage = new BookingHomePage(driver);
-        bookingHomePage.checkSizeofAlertDiv();
+       int x =  pageObjectManager.getBookingHomePage().checkSizeofAlertDiv();
+      //       BookingHomePage bookingHomePage = new BookingHomePage(driver);
+     //     bookingHomePage.checkSizeofAlertDiv();
+
+        if(x>5 && x<15) {
+            System.out.println("Size of font is correct");
+        } else {
+            Assert.fail();
+        }
+
     }
 
     @Test
@@ -173,8 +174,10 @@ public class Login2test {
 
     @Test
     public void checkNumberOfPropertiesInCity() {
-        BookingHomePage bookingHomePage = new BookingHomePage(driver);
-        bookingHomePage.getNumberOfProperties();
+        pageObjectManager.getBookingHomePage().getNumberOfProperties();
+
+     //   BookingHomePage bookingHomePage = new BookingHomePage(driver);
+    //    bookingHomePage.getNumberOfProperties();
     }
 
 
@@ -188,6 +191,16 @@ public class Login2test {
         Assert.assertEquals("Wynajem samochodu na każdy rodzaj podróży", textOfCarHirePageHeader);
 
     }
+
+
+
+
+    @Test
+    public void find3CheapOffers() {
+
+
+    }
+
 
 }
 

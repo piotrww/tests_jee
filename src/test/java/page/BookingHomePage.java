@@ -1,10 +1,15 @@
 package page;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.Integer.parseInt;
 
 public class BookingHomePage extends BasePage {
 
@@ -37,10 +42,30 @@ public class BookingHomePage extends BasePage {
     private WebElement divAlert;
 
     @FindBy(css =".unified-postcard__header > p")
-    List<WebElement> propertiesInCities;
+    private List<WebElement> propertiesInCities;
 
     @FindBy(css = "li.bui-tab__item:nth-child(3)")
     private WebElement carHireLink;
+
+    @FindBy(css = "#ss")
+    private WebElement inputHotelLocation;
+
+    @FindBy(css = ".xp__button")
+    private WebElement findButton;
+
+
+
+//
+//    @FindBy(xpath = "//button[@class='sb-searchbox__button '")
+//    WebElement findStaysInSelectedDays;
+
+
+
+
+
+    @FindBy(css = ".roomPrice .bui-price-display__value")
+    List<WebElement> allPricesSortAsc;
+
 
 
 
@@ -64,7 +89,7 @@ public class BookingHomePage extends BasePage {
 
             //    int indexOfFirstLetter = eachPropText.indexOf('o');
 
-            int stringToInt = Integer.parseInt(eachPropTextToCutNoSpace);
+            int stringToInt = parseInt(eachPropTextToCutNoSpace);
             System.out.println(stringToInt);
 
             if (stringToInt > 100000 || stringToInt < 1) {
@@ -107,12 +132,12 @@ public class BookingHomePage extends BasePage {
 
     }
 
-    public String clickAndGetExtraAlertText() {
+    public int getNumberOfCharactersInAlert() {
         loginButtonBooking.click();
-        String TextOfExtraDiv = divExtraAlertContent.getText();
-        System.out.println("Taken content: " + TextOfExtraDiv);
+        String textOfExtraDiv = divExtraAlertContent.getText();
+        System.out.println("Taken content: " + textOfExtraDiv);
 //To LoginTest
-        int numberOfCharacters = TextOfExtraDiv.length();
+        int numberOfCharacters = textOfExtraDiv.length();
         System.out.println("Liczba znaków: " + numberOfCharacters);
 
         if (numberOfCharacters > 20 && numberOfCharacters < 320) {
@@ -122,19 +147,19 @@ public class BookingHomePage extends BasePage {
         }
 
 
-        return TextOfExtraDiv;
+        return numberOfCharacters;
 
 
     }
 
-    public Integer checkSizeofAlertDiv() {
+    public int checkSizeofAlertDiv() {
 
-       Integer x = divAlert.getSize().getHeight();
+        int x = divAlert.getSize().getHeight();
         System.out.println(x);
         divAlert.click();
-        Integer y = divAlert.getSize().getHeight();
+        int y = divAlert.getSize().getHeight();
         divAlert.click();
-        Integer z = divAlert.getSize().getHeight();
+        int z = divAlert.getSize().getHeight();
 
         System.out.println("x " + x + "y " + y + "z " + z);
 
@@ -143,6 +168,17 @@ public class BookingHomePage extends BasePage {
 
 
     };
+
+public HotelLocationResultPage enterHotelLocationRepaired() {
+    inputHotelLocation.sendKeys("Sopot");
+    findButton.click();
+    return new HotelLocationResultPage(driver);
+
+
+}
+
+
+
 
 
 
@@ -197,6 +233,8 @@ public class BookingHomePage extends BasePage {
         for (WebElement userMenuUnitText : userMenuTexts ) {
             System.out.println(userMenuUnitText.getText());
         }
+
+
 
     }
 

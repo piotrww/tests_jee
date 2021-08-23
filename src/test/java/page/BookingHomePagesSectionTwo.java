@@ -49,7 +49,7 @@ public class BookingHomePagesSectionTwo extends BasePage {
 
     public String greyTimeBelt() {
         System.out.println("Test");
-       System.out.println(greyText.getText());
+        System.out.println(greyText.getText());
         return greyText.getText();
     }
 
@@ -134,6 +134,12 @@ public class BookingHomePagesSectionTwo extends BasePage {
 
 
     }
+
+
+//    public String find3cheapHotels() {
+//
+//
+//    }
 
 
 
