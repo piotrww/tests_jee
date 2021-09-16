@@ -194,14 +194,6 @@ public class Login2test {
 
 
 
-
-    @Test
-    public void find3CheapOffers() {
-
-
-    }
-
-
 }
 
 

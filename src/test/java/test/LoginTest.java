@@ -8,12 +8,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import page.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
+import static java.util.Collections.*;
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -22,6 +23,7 @@ public class LoginTest {
 
     private BookingHomePage bookingHomePage = new BookingHomePage(driver);
     private PageObjectManager pageObjectManager;
+    private Object Collections;
 
 
     @Before // one
@@ -183,7 +185,7 @@ public class LoginTest {
     }
 
     @Test
-    public void findCheapHotels() throws InterruptedException {
+    public void findCheapHotels() throws InterruptedException { //Pytanie o te 3 hotele.
 
         List<Integer> top10CheapOffers = pageObjectManager
                 .getBookingHomePage()
@@ -192,19 +194,62 @@ public class LoginTest {
                 .sortByPrice()
                 .getSortedPrice();
 
-        for (int i = 0; i < top10CheapOffers.size() - 1; i++) { //HOMEWORK: z for wyrzucic do HotelLocation...Page.getSortedPrice;
 
-            System.out.println("1: " + top10CheapOffers.get(i));
-            System.out.println("+1: " + top10CheapOffers.get(i + 1));
 
-            if (top10CheapOffers.get(i) > top10CheapOffers.get(i + 1)) {
-                System.out.println("test is failed, first value should be smaller or equal");
-                break;
-            } else {
-                System.out.println("test is passed, first value is smaller or equal");
-            }
-        }
+
+        List<Integer> top10CheapOffersSorted = top10CheapOffers.stream()
+               .sorted().collect(Collectors.toList()); //Pierwotna lista jest sortowana i zapisywana.
+
+        assertEquals(top10CheapOffers, top10CheapOffersSorted); //Porównanie listy pobranej i tej samej posortowanej
+
+
+
+
     }
+
+    @Test
+    public void findFlightFromGdanskToCracow() throws InterruptedException {
+
+        String takenPrice =
+                pageObjectManager
+                .getBookingHomePage()
+                .goToFlightsPage()
+                .clickRadioOneWay()
+                .clickInputDeparture()
+                .closeDefaultDeparture()
+                .inputDepartureCity()
+                .inputDestinationCity()
+                .selectFlightsDate()
+                .clickFind()
+                .getCheapestFlights()
+                .getSmallestPrice()
+                .getPriceValue();
+
+
+       Assert.assertTrue(takenPrice.contains("zł"));
+        System.out.println(takenPrice);
+
+
+    }
+
+
+
+
+
+//        for (int i = 0; i < top10CheapOffers.size() - 1; i++) { //HOMEWORK: z for wyrzucic do HotelLocation...Page.getSortedPrice;
+//
+//            System.out.println("1: " + top10CheapOffers.get(i));
+//            System.out.println("+1: " + top10CheapOffers.get(i + 1));
+//
+//
+//            if (top10CheapOffers.get(i) > top10CheapOffers.get(i + 1)) {
+//                System.out.println("test is failed, first value should be smaller or equal");
+//                break;
+//            } else {
+//                System.out.println("test is passed, first value is smaller or equal");
+//            }
+//        }
+  
 
     @Test
     public void myPlayGround() {

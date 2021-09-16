@@ -47,11 +47,15 @@ public class BookingHomePage extends BasePage {
     @FindBy(css = "li.bui-tab__item:nth-child(3)")
     private WebElement carHireLink;
 
-    @FindBy(css = "#ss")
+    @FindBy(id = "ss") //zamiast xpath i css
     private WebElement inputHotelLocation;
 
-    @FindBy(css = ".xp__button")
+    @FindBy(css = ".sb-searchbox__button")
     private WebElement findButton;
+
+    @FindBy(xpath = "//*[@id='b2indexPage']/header/nav[2]/ul/li[2]")
+    private WebElement flightsButton;
+
 
 
 
@@ -65,6 +69,7 @@ public class BookingHomePage extends BasePage {
 
     @FindBy(css = ".roomPrice .bui-price-display__value")
     List<WebElement> allPricesSortAsc;
+
 
 
 
@@ -177,6 +182,15 @@ public HotelLocationResultPage enterHotelLocationRepaired() {
 
 }
 
+    public FlyPageList goToFlightsPage() {
+
+        flightsButton.click();
+
+        return new FlyPageList(driver);
+
+
+    }
+
 
 
 
@@ -243,6 +257,13 @@ public HotelLocationResultPage enterHotelLocationRepaired() {
         carHireLink.click();
 
         return new CarHirePage(driver); //Nowa instancja klasy CarHirePage.
+
+    }
+
+    public FlyPageList clickFlightButton() throws InterruptedException {
+        flightsButton.click();
+        return new FlyPageList(driver);
+
 
     }
 

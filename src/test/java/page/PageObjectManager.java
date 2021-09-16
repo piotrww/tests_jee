@@ -23,8 +23,10 @@ public class PageObjectManager {
    //         return bookingHomePage;
    //     }
 
-
     }
+
+
+
 }
                 //ternary operator
                 ;
