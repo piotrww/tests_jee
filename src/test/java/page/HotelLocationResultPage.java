@@ -1,25 +1,22 @@
 package page;
 
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.parseInt;
 
 
-public class HotelLocationResultPage extends BookingHomePage{
+public class HotelLocationResultPage extends BookingHomePage {
 
 
     @FindBy(xpath = "//div[2]/table/tbody/tr[1]/td[7]") //tak skonstuować element, aby wpisać data-data
@@ -28,17 +25,26 @@ public class HotelLocationResultPage extends BookingHomePage{
     @FindBy(css = "button#onetrust-accept-btn-handler")
     private WebElement policyWarningButtonToClose;
 
-    @FindBy(css = "button.sb-searchbox__button ")
-    private WebElement findStaysInSelectedDays;
+    @FindBy(css = ".sb-searchbox__button ")
+    private WebElement searchButton;
 
-    @FindBy(css = "a .sr-hotel__name")
-    private List<WebElement> NamesofThreeCheapestStays;
+    @FindBy(css = ".bui-calendar__content")
+    private WebElement calendarTitleWithStayingDays;
 
     @FindBy(xpath = "//a[@data-type='price']")
     private WebElement buttonSortByPrice;
 
+    @FindBy(css = "div.sr_item")
+    private List<WebElement> NumberOfHotelsDivs;
+
+    @FindBy(css = ".c-sr_alternative_dates__item__price")
+    private WebElement priceInBox;
+
+    @FindBy(xpath = "//*[@id='right']//div[2]/div/span/div[2])")
+    private WebElement BoxTextPriceFrom;
 
 
+    private final WebDriverWait wait = new WebDriverWait(driver, 10); //private final
 
 
     public HotelLocationResultPage(WebDriver driver) {
@@ -47,73 +53,38 @@ public class HotelLocationResultPage extends BookingHomePage{
 
 
     public HotelLocationResultPage chooseStayDateCheckIn() {
-
-
-        // System.out.println(calendarStayDateStart.getText());
+        policyWarningButtonToClose.click(); //CTRL ALT arrow-up/down
+        System.out.println("warning clicked"); //JAK ZADZIAla - wywal!!
+        wait.until(ExpectedConditions.visibilityOf(calendarStayDateStart));
 
         calendarStayDateStart.click();
+        System.out.println("start date selected");
 
-        policyWarningButtonToClose.click();
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("javascript:window.scrollBy(550,550)"); //Scroll down to find calendar
-
-        findStaysInSelectedDays.click();
-
+        searchButton.click();
+        System.out.println("hotel loca");
         return this; //ten obiekt zwracam
     }
 
-    public HotelLocationResultPage sortByPrice() {
+    public List<Integer> sortByPrice() { //ALT + ENTER to remove
+
+        buttonSortByPrice.click(); //porządkowanie CTRL ALT L
+        System.out.println("sorted");
         buttonSortByPrice.click();
-        return this;
-    }
+        System.out.println("clicked again"); // otherwise first brick were selected
 
-
-
-    public List<Integer> getSortedPrice() {
-
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-                wait.until(ExpectedConditions.attributeToBe());
-        
-
-
+        wait.until(ExpectedConditions.not(ExpectedConditions.textToBe(By.xpath("//a[@data-testid='list-item'][1]"), "")));
         List<Integer> top10CheapOffers = new ArrayList<>();
-        for (int i=0; i<10; i++)      {
-//            System.out.println(allPricesSortAsc.get(i).getText());
+
+        for (int i = 0; i < 10; i++) {
+            System.out.println(allPricesSortAsc.get(i).getText());
 
             int locationOfSpaceInPrice = allPricesSortAsc.get(i).getText().indexOf(" ");
 
-            int priceCutFromString = parseInt(allPricesSortAsc.get(i).getText().substring(0,locationOfSpaceInPrice));
+            int priceCutFromString = parseInt(allPricesSortAsc.get(i).getText().substring(0, locationOfSpaceInPrice));
             System.out.println(priceCutFromString);
             top10CheapOffers.add(priceCutFromString);
+            System.out.println(top10CheapOffers);
         }
-
-        System.out.println(top10CheapOffers);
-
         return top10CheapOffers;
-
-
     }
-
-    public List<String> getNamesOfThreeCheapest() throws InterruptedException { //Próbowałem dodać to, ale nie wiem, czy to w ramach tego samego testu?
-        Thread.sleep(4000);
-        List<String> NamesofThreeCheapestStaysToList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            System.out.println(NamesofThreeCheapestStays.get(i).getText());
-            NamesofThreeCheapestStaysToList.add(NamesofThreeCheapestStays.get(i).getText());
-        }
-        System.out.println(NamesofThreeCheapestStaysToList);
-
-        for (int i = 0; i < 3; i++) {
-
-            System.out.println(NamesofThreeCheapestStaysToList.get(i));
-        }
-
-        return NamesofThreeCheapestStaysToList;
-    }
-
-
-
-
-
 }

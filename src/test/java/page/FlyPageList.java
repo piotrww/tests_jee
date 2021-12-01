@@ -4,8 +4,13 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
-
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 public class FlyPageList extends BookingHomePage {
@@ -57,6 +62,13 @@ public class FlyPageList extends BookingHomePage {
 
     public FlyPageList inputDepartureCity() throws InterruptedException {
         inputDepartureCity.sendKeys("OPO");
+
+        List<Integer> top10CheapOffers = new ArrayList<>();
+
+        Wait wait = new FluentWait(driver)
+        .pollingEvery(Duration.ofSeconds(5)); //wiele metod można zastosować.
+        //Driver musi być, bo i wait potrzebuję.
+
         Thread.sleep(4000);
         headerOfFlightsPage.click();
 

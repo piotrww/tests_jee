@@ -185,26 +185,19 @@ public class LoginTest {
     }
 
     @Test
-    public void findCheapHotels() throws InterruptedException { //Pytanie o te 3 hotele.
+    public void findCheapHotels() { //Pytanie o te 3 hotele.
 
         List<Integer> top10CheapOffers = pageObjectManager
                 .getBookingHomePage()
                 .enterHotelLocationRepaired()
                 .chooseStayDateCheckIn()
-                .sortByPrice()
-                .getSortedPrice();
+                .sortByPrice();
 
-
-
-
-        List<Integer> top10CheapOffersSorted = top10CheapOffers.stream()
-               .sorted().collect(Collectors.toList()); //Pierwotna lista jest sortowana i zapisywana.
-
+        List<Integer> top10CheapOffersSorted = top10CheapOffers
+                .stream()
+                .sorted()
+                .collect(Collectors.toList()); //Pierwotna lista jest sortowana i zapisywana.
         assertEquals(top10CheapOffers, top10CheapOffersSorted); //Porównanie listy pobranej i tej samej posortowanej
-
-
-
-
     }
 
     @Test
@@ -231,6 +224,9 @@ public class LoginTest {
 
 
     }
+
+
+
 
 
 

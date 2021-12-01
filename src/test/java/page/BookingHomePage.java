@@ -66,8 +66,7 @@ public class BookingHomePage extends BasePage {
 
 
 
-
-    @FindBy(css = ".roomPrice .bui-price-display__value")
+    @FindBy(xpath = "//div[@data-testid='price-and-discounted-price']/span[last()]")
     List<WebElement> allPricesSortAsc;
 
 
@@ -177,8 +176,8 @@ public class BookingHomePage extends BasePage {
 public HotelLocationResultPage enterHotelLocationRepaired() {
     inputHotelLocation.sendKeys("Sopot");
     findButton.click();
+    System.out.println("Go to next page");
     return new HotelLocationResultPage(driver);
-
 
 }
 

@@ -4,6 +4,8 @@ public class Car {
     public Car() {
         printInConstructor();
 
+        Mono aa = new Mono();
+
     }
 
     public void printInConstructor() {
